@@ -62,4 +62,28 @@ var frases = {
 							#AAAAAAAAAAAAAOAAAAAAAAAAAAAOAAAAAAAAAAAAAO
 		"frase" : "LA GUERRA MAS GRANDE QUE HA VISTO EL MUNDO"
 		},
+	12 : {
+		"solved" : false,
+		"pista" : "Contar hasta 10 ...",
+							#AAAAAAAAAAAAAOAAAAAAAAAAAAAOAAAAAAAAAAAAAO
+		"frase" : "ES MAS DIFÍCIL QUE CONSEGUIR EL PARTNER"
+		},
+	13 : {
+		"solved" : false,
+		"pista" : "Trollear en NUMERICA ...",
+							#AAAAAAAAAAAAAOAAAAAAAAAAAAAOAAAAAAAAAAAAAO
+		"frase" : "NO PUEDE ESTAR MAL VISTO SI SE HACE BIEN"
+		},
+	14 : {
+		"solved" : false,
+		"pista" : "GODOT es sin duda ...",
+							#AAAAAAAAAAAAAOAAAAAAAAAAAAAOAAAAAAAAAAAAAO
+		"frase" : "EL MEJOR MOTOR DE JUEGOS QUE SE PUEDE USAR"
+		},
+	15 : {
+		"solved" : false,
+		"pista" : "Si os quereis a vosotros mismos, podéis ...",
+							#AAAAAAAAAAAAAOAAAAAAAAAAAAAOAAAAAAAAAAAAAO
+		"frase" : "JUGAR A TODOS MIS PROYECTOS EN ITCHIO"
+		},
 }
