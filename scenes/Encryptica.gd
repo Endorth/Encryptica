@@ -35,10 +35,22 @@ func _ready():
 	for player in players.get_children():
 		players.remove_child(player)
 	
-#	# warning-ignore: return_value_discarded
-#	$Gift.connect("new_letter", self, "add_letter")
-#	# warning-ignore: return_value_discarded
-#	$Gift.connect("new_solve", self, "add_solve")
+	TwitchChat.connect("new_message", self, "send_data")
+
+func send_data(data):
+	if "username" in data:
+		var user : String = data["username"]
+		var msg : String = data["msg"]
+		if is_new_player(user):
+			add_player(user)
+		if msg.begins_with("!l "):
+			add_letter(user, msg, "!l ")
+		elif msg.begins_with("!letter "):
+			add_letter(user, msg, "!letter ")
+		elif msg.begins_with("!s "):
+			add_solve(user, msg, "!s ")
+		elif msg.begins_with("!solve "):
+			add_solve(user, msg, "!solve ")
 
 func add_solve(plyr, msg, m):
 	match m:
@@ -46,6 +58,7 @@ func add_solve(plyr, msg, m):
 			msg.erase(0, 3)
 		"!solve " : 
 			msg.erase(0, 7)
+	msg = msg.left(msg.length() - 1)
 	check_solve(msg, plyr)
 
 func check_solve(msg, plyr):
@@ -60,10 +73,12 @@ func check_solve(msg, plyr):
 
 func add_letter(plyr, msg, m):
 	match m:
-		"!l " : 
+		"!l " :
 			msg.erase(0, 3)
 		"!letter " : 
 			msg.erase(0, 8)
+	
+	msg = msg.left(msg.length() - 1)
 	check_letters(msg, plyr)
 
 func is_correct_type(let, msg) -> bool:
@@ -133,7 +148,6 @@ func check_letters(msg, plyr):
 				if not c.is_solved:
 					c.solve()
 					i += 1
-	
 	if is_game_start:
 		give_points_to(plyr, i)
 		check_results()
@@ -163,27 +177,26 @@ func is_panel_completed() -> bool:
 				break
 	return b
 		
-		
 func give_points_to(plyr, i):
 	for player in players.get_children():
 		if player.user == plyr:
 			player.points += i
 
-
-func enter_action(msg):
-	var r = randi()% 10
-	var user = 'endorth' + str(r)
-	if is_new_player(user):
-		add_player(user)
-	if msg.begins_with("!l "):
-		add_letter(user, msg, "!l ")
-	elif msg.begins_with("!letter "):
-		add_letter(user, msg, "!letter ")
-	elif msg.begins_with("!s "):
-		add_solve(user, msg, "!s ")
-	elif msg.begins_with("!solve "):
-		add_solve(user, msg, "!solve ")
-	$SendButton/LineEdit.clear()
+#func enter_action(user, msg):
+##	var r = randi()% 10
+##	var user = 'endorth' + str(r)
+#	print(players)
+#	if is_new_player(user):
+#		add_player(user)
+#	if msg.begins_with("!l "):
+#		add_letter(user, msg, "!l ")
+#	elif msg.begins_with("!letter "):
+#		add_letter(user, msg, "!letter ")
+#	elif msg.begins_with("!s "):
+#		add_solve(user, msg, "!s ")
+#	elif msg.begins_with("!solve "):
+#		add_solve(user, msg, "!solve ")
+#	$SendButton/LineEdit.clear()
 
 func is_new_player(user) -> bool:
 	var b : bool = true
@@ -197,9 +210,11 @@ func add_player(user):
 	var p = PLAYER.instance()
 	p.user = user
 	players.add_child(p)
+	
 
 func _on_SendButton_pressed():
-	enter_action($SendButton/LineEdit.text)
+	pass
+#	enter_action($SendButton/LineEdit.text)
 
 func add_cartel(l):
 	var c = CARTEL.instance()
