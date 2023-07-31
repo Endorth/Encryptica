@@ -285,6 +285,5 @@ func add_leader_label(_pl, i):
 																			players.get_children()[i].points)
 
 
-
 func _on_MenuButton_toggled(button_pressed):
 	$Menu.visible = button_pressed

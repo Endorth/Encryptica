@@ -324,18 +324,6 @@ texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 5 )
 expand = true
 
-[node name="SendButton" type="Button" parent="."]
-margin_left = 688.0
-margin_top = 384.0
-margin_right = 731.0
-margin_bottom = 404.0
-text = "send"
-
-[node name="LineEdit" type="LineEdit" parent="SendButton"]
-margin_left = -64.0
-margin_right = -6.0
-margin_bottom = 24.0
-
 [node name="Players" type="Node" parent="."]
 
 [node name="EncPlayer" parent="Players" instance=ExtResource( 8 )]
@@ -432,6 +420,5 @@ margin_right = 0.255981
 margin_bottom = 0.191986
 
 [connection signal="pressed" from="AddPhrase" to="." method="_on_AddPhrase_pressed"]
-[connection signal="pressed" from="SendButton" to="." method="_on_SendButton_pressed"]
 [connection signal="toggled" from="LeaderboardButton" to="." method="_on_LeaderboardButton_toggled"]
 [connection signal="toggled" from="MenuButton" to="." method="_on_MenuButton_toggled"]
