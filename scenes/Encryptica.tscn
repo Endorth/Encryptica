@@ -422,10 +422,14 @@ rect_min_size = Vector2( 320, 13 )
 text = "hola"
 
 [node name="Menu" parent="." instance=ExtResource( 17 )]
-margin_left = 256.0
-margin_top = 72.0
-margin_right = -256.0
-margin_bottom = -88.0
+anchor_left = 0.308
+anchor_top = 0.173
+anchor_right = 0.692
+anchor_bottom = 0.788
+margin_left = -0.256012
+margin_top = 0.0319977
+margin_right = 0.255981
+margin_bottom = 0.191986
 
 [connection signal="pressed" from="AddPhrase" to="." method="_on_AddPhrase_pressed"]
 [connection signal="pressed" from="SendButton" to="." method="_on_SendButton_pressed"]

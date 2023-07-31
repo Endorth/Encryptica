@@ -15,7 +15,6 @@ class MyCustomSorter:
 			return true
 		return false
 
-
 func _sorter():
 	var sort_array = []
 	for pl in players.get_children():
@@ -27,8 +26,8 @@ func _sorter():
 		players.move_child(sorted_players[1], i)
 		i += 1
 	
-
 func _ready():
+	$Menu.connect("was_pressed", self, 'connection')
 	randomize()
 	$Menu.visible = false
 	$LeaderPanel.visible = false
@@ -36,6 +35,12 @@ func _ready():
 		players.remove_child(player)
 	
 	TwitchChat.connect("new_message", self, "send_data")
+
+func connection(text):
+	TwitchChat.channel = text
+	TwitchChat._anon_connection()
+	$Menu.visible = false
+	$MenuButton.pressed = false
 
 func send_data(data):
 	if "username" in data:

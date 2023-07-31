@@ -1,6 +1,6 @@
 extends Control
 
-
+signal was_pressed()
 func _on_ConnecteButton_pressed():
-	TwitchChat.channel = $LineEdit.text
-	TwitchChat._anon_connection()
+	emit_signal("was_pressed", $LineEdit.text)
+	
