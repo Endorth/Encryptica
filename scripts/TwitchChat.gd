@@ -86,6 +86,7 @@ func _closed(was_clean = false):
 	#set_process(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	if !ws || ws.get_connection_status() == WebSocketClient.CONNECTION_DISCONNECTED:
 		return
@@ -93,10 +94,13 @@ func _process(delta):
 		
 func _requestCredentials():
 	if(temp_id && !auth):
+		# warning-ignore:return_value_discarded
 		$HTTPRequest.connect("request_completed", self,"_processCredentials")
+		# warning-ignore:return_value_discarded
 		$HTTPRequest.request("https://oauth-dev.seyacat.com/twitch/tempid?temp_id="+temp_id)
 		
-func _processCredentials(result, response_code, headers, body):
+
+func _processCredentials(_result, _response_code, _headers, body):
 	$HTTPRequest.disconnect("request_completed", self,"_processCredentials")
 	var json = parse_json(body.get_string_from_utf8())
 	if(json):

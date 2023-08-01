@@ -1,14 +1,14 @@
 extends Control
-const PLAYER = preload("res://Scenes/EncPlayer.tscn")
-const CARTEL = preload("res://Scenes/Cartel.tscn")
-const LEAD = preload("res://Scenes/LeadLabel.tscn")
-#onready var gift = $Gift
+const PLAYERSCN = preload("res://scenes/EncPlayer.tscn")
+const CARTELSCN = preload("res://scenes/Cartell.tscn")
+const LEADSCN = preload("res://scenes/LeadLabel.tscn")
 onready var players = $Players
 var is_game_start = false
 
 var current_frase : String = ''
 var current_pista : String = ''
 var psph = []
+
 class MyCustomSorter:
 	static func sort_descending(a, b):
 		if a[0] > b[0]:
@@ -27,14 +27,14 @@ func _sorter():
 		i += 1
 	
 func _ready():
-	$Menu.connect("was_pressed", self, 'connection')
 	randomize()
-	$Menu.visible = false
-	$LeaderPanel.visible = false
 	for player in players.get_children():
 		players.remove_child(player)
-	
+# warning-ignore:return_value_discarded
+	$Menu.connect("was_pressed", self, "connection")
+# warning-ignore:return_value_discarded
 	TwitchChat.connect("new_message", self, "send_data")
+
 
 func connection(text):
 	TwitchChat.channel = text
@@ -46,6 +46,7 @@ func send_data(data):
 	if "username" in data:
 		var user : String = data["username"]
 		var msg : String = data["msg"]
+		
 		if is_new_player(user):
 			add_player(user)
 		if msg.begins_with("!l "):
@@ -187,22 +188,6 @@ func give_points_to(plyr, i):
 		if player.user == plyr:
 			player.points += i
 
-#func enter_action(user, msg):
-##	var r = randi()% 10
-##	var user = 'endorth' + str(r)
-#	print(players)
-#	if is_new_player(user):
-#		add_player(user)
-#	if msg.begins_with("!l "):
-#		add_letter(user, msg, "!l ")
-#	elif msg.begins_with("!letter "):
-#		add_letter(user, msg, "!letter ")
-#	elif msg.begins_with("!s "):
-#		add_solve(user, msg, "!s ")
-#	elif msg.begins_with("!solve "):
-#		add_solve(user, msg, "!solve ")
-#	$SendButton/LineEdit.clear()
-
 func is_new_player(user) -> bool:
 	var b : bool = true
 	for player in players.get_children():
@@ -212,17 +197,13 @@ func is_new_player(user) -> bool:
 	return b
 
 func add_player(user):
-	var p = PLAYER.instance()
+	var p = PLAYERSCN.instance()
 	p.user = user
 	players.add_child(p)
 	
 
-func _on_SendButton_pressed():
-	pass
-#	enter_action($SendButton/LineEdit.text)
-
 func add_cartel(l):
-	var c = CARTEL.instance()
+	var c = CARTELSCN.instance()
 	
 	c.is_special = is_special_character(l)
 	c.letter = l
@@ -275,11 +256,11 @@ func update_leaderboard():
 	_sorter()
 	var i = 0
 	for pl in players.get_children():
-		add_leader_label(pl, i)
+		add_leader_label(i)
 		i += 1
 		
-func add_leader_label(_pl, i):
-	var l = LEAD.instance()
+func add_leader_label(i):
+	var l = LEADSCN.instance()
 	$LeaderPanel/ScrollContainer/VBoxContainer.add_child(l)
 	l.text = players.get_children()[i].user + " -> " + str(
 																			players.get_children()[i].points)
@@ -287,3 +268,11 @@ func add_leader_label(_pl, i):
 
 func _on_MenuButton_toggled(button_pressed):
 	$Menu.visible = button_pressed
+
+
+func _on_ExitButton_pressed():
+	get_tree().quit()
+
+
+func _on_BorderButton_toggled(button_pressed):
+	OS.window_borderless = button_pressed

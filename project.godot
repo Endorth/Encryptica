@@ -50,8 +50,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-EDB="*res://scripts/EncrypticaDB.gd"
 TwitchChat="*res://scripts/TwitchChat.gd"
+EDB="*res://scripts/EncrypticaDB.gd"
 
 [display]
 
